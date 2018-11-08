@@ -20,7 +20,7 @@ UI.c文件：用户界面，提供所有用户选择与操作的界面函数。
 建议使用devc++或VS2017进行编译。devc++在编译时需要在编译器参数里的链接下添加以下文件
 （默认安装目录下）：
 
-<img src="https://github.com/PuZhiweizuishuai/Student-achievement-management-system/blob/master/Explain.png" />
+<img src="AcmPractice/StudentMessage/Explain.png" />
 
 
 "../../../../Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32/libwinmm.a"
