@@ -49,6 +49,8 @@ int main()
         {
             // x 的一个通解
             x = x * (d / gcd);
+            // b / gcd这里是求通解之间的最小间隔
+            // x % t 就是最小的正整数解
             t = b / gcd;
             if (x < 0)
                 x = x % t + t;
