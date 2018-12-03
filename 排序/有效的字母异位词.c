@@ -61,3 +61,19 @@ int main(void)
    
     return 0;
 }
+
+
+/**
+// 一个更加简单的java实现
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if(s.length() != t.length())
+            return false;
+        char[] as = s.toCharArray();
+        char[] ts = t.toCharArray();
+        Arrays.sort(as);
+        Arrays.sort(ts);
+        return Arrays.equals(as, ts);
+    }
+}
+*/
