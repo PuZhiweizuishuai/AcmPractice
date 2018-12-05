@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include<math.h>
+#define DOUBLE_EPS 1e-15
 /**
  * 已知三点，求抛物线与直线围成的面积
  * a,b,c求值使用三点式公式见
@@ -11,14 +13,31 @@ long double DefiniteIntefral(long double a, long double b, long double c, long d
 
 long double Result(long double x1, long double y1, long double x2, long double y2, long double x3, long double y3)
 {
-    long double a, b, c, s, s1, s2, s3;
+    long double a, b, c, s, s1, s2, s3, k, b1;
+    long double zeor;
+    // 求抛物线 a,b,c
     b = ((x2 * x2 - x3 * x3) * (y1 - y2) - (x1 * x1 - x2 * x2) * (y2 - y3)) / ((x2 * x2 - x3 * x3) * (x1 - x2) - (x1 * x1 - x2 * x2) * (x2 - x3));
-    a = (y1 - y2 - b * (x1 - x2)) / (x1 * x1 - x2 * x2);
+    zeor = (y1 - y2 - b * (x1 - x2));
+   
+    if(fabsl(zeor) <= DOUBLE_EPS)
+    {
+        a = (y2 - y3 - b * (x2 - x3)) / (x2 * x2 - x3 * x3);    
+    }
+    else
+    {
+        a = (y1 - y2 - b * (x1 - x2)) / (x1 * x1 - x2 * x2);
+    } 
+        
     c = y1 - a * x1 * x1 - b * x1;
-    //printf("a=%Lf b=%Lf c=%Lf\n",a,b,c);
-    s1 = DefiniteIntefral(a, b, c, x3) - DefiniteIntefral(a, b, c, x2);
-    s2 = ((y3 + y2) * (x3 - x2)) / 2.0;
-    s = s1 - s2;
+    //printf("\npaowuxian a=%Lf b=%Lf c=%Lf\n",a,b,c);
+    // 求直线 k b1
+    k = (y2 - y3) / (x2 - x3);
+    b1 = -k * x2 + y2;
+
+    // 求面积
+    b = b - k;
+    c = c - b1;
+    s = DefiniteIntefral(a, b, c, x3) - DefiniteIntefral(a, b, c, x2);
     if(s < 0)
         s = -s;
     return s;
