@@ -28,11 +28,10 @@ int flag;
 */
 void UF(int n)
 {
-    int i;
-    for (i = 0; i <= n; i++)
-        id[i] = i;
+    int i;  
     for (i = 0; i <= n; i++)
     {
+        id[i] = i;
         size[i] = -1;
         mark[i] = 0;
     }
