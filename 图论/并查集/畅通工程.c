@@ -46,9 +46,10 @@ void UF(int n)
     count = n - 1;
     // 初始化节点和权值
     for (i = 0; i <= n; i++)
+    {
         city[i] = i;
-    for (i = 0; i <= n; i++)
         size[i] = -1;
+    }   
 }
 
 /**
