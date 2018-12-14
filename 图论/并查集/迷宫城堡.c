@@ -86,7 +86,7 @@ void unions(int p, int q)
 */
 void IsUnicom()
 {
-    if(flag = 1)
+    if(flag == 1)
         return ;
     int i, count = 0;
     for(i = 0; i < MAX; i++)
