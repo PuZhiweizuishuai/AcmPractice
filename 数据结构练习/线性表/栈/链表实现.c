@@ -82,7 +82,7 @@ SeqStack *Pop(SeqStack *stack)
     if (IsEmpty(stack))
     {
         printf("Underflow\n");
-        exit(1);
+        return NULL;
     }
     x = temp->number;
     stack = temp->next;
