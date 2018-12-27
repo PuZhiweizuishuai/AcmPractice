@@ -37,6 +37,11 @@ int OutQuene(SeqQueue *Q);
 */
 int GetHead(SeqQueue *Q);    
 
+/**
+ * 获取队列大小
+*/
+int GetSize(SeqQueue *Q);
+
 int main(void)
 {
 	SeqQueue *Q = (SeqQueue *)malloc(sizeof(SeqQueue));
@@ -45,6 +50,7 @@ int main(void)
 	InQuene(Q, 10);
 	InQuene(Q, 20);
 	InQuene(Q, 30);
+	printf("%d\n", GetSize(Q));
 	OutQuene(Q);
 	//OutQuene(Q);
 
@@ -101,4 +107,10 @@ int GetHead(SeqQueue *Q)
 		return 0;
 	}
 	return Q->data[(Q->front + 1) % MAXSIZE];
+}
+
+
+int GetSize(SeqQueue *Q)
+{
+	return (MAXSIZE + Q->rear - Q->front) % MAXSIZE;
 }
