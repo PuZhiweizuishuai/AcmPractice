@@ -112,5 +112,6 @@ int GetHead(SeqQueue *Q)
 
 int GetSize(SeqQueue *Q)
 {
+	// 队列大小公式
 	return (MAXSIZE + Q->rear - Q->front) % MAXSIZE;
 }
