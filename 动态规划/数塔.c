@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-int max(int a, int b)
-{
-    if(a > b)
-        return a;
-    return b;
-}
+#define max(a,b) (((a) > (b)) ? (a) : (b))
 
 void sum()
 {
