@@ -1,53 +1,52 @@
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
 
-int min(int a, int b)
+#include <stdio.h>
+#define MAX 2000
+
+int Greedy(int num, int s[], int f[])
 {
-    if (a > b)
-        return b;
-    return a;
+
+    int preStart = 0;
+    int preFinal = MAX; //保证是无限大即可
+    int i;
+    int temp;
+    int OK = 1;
+    int sel[MAX]; //用来储存相容的活动编号
+    int selNum = 0;
+
+    while (OK)
+    {
+        OK = 0;
+        for (i = 0; i < num; i++)
+        {
+
+            if (f[i] < preFinal && s[i] >= preStart)
+            { //寻找开始时间合适地情况下结束时间最早者
+                preFinal = f[i];
+                temp = i;
+                OK = 1;
+            }
+        }
+
+        if (preFinal != MAX)
+        { //变量的重新赋值
+            sel[selNum++] = temp;
+            preStart = f[temp];
+            preFinal = MAX;
+        }
+    }
+    return selNum;
 }
 
 int main(void)
 {
-    int n, k, dp[25][550], i, j, h, s, t, x;
-    while (scanf("%d%d", &n, &k))
+    int s[MAX], f[MAX];
+    int n, i, sum;
+    scanf("%d", &n);
+    for (i = 0; i < n; i++)
     {
-        memset(dp, 0, sizeof(dp));
-        for (i = 1; i <= k; i++)
-        {
-            scanf("%d", &x);
-            dp[1][x] = 1;
-        }
-        for (i = 2; i <= n; i++)
-        {
-            for (j = 1; j <= k; j++)
-            {
-                scanf("%d", &x);
-                s = 99999;
-                for (h = 1; h <= 500; h++)
-                {
-                    if (dp[i - 1][h] != 0)
-                    {
-                        t = dp[i - 1][h] + abs(x - h);
-                        s = min(s, t);
-                    }
-                }
-                dp[i][x] = s;
-            }
-        }
-        s = 99999;
-        for (h = 1; h <= 500; h++)
-        {
-            if (dp[n][h] != 0)
-            {
-                printf("%d    ", dp[n][h]);
-                s = min(dp[n][h], s);
-            }
-        }
-        printf("\n%d\n", s);
+        scanf("%d%d", &s[i], &f[i]);
     }
-
+    sum = Greedy(n, s, f);
+    printf("%d", sum);
     return 0;
 }
