@@ -1,56 +1,44 @@
-#include <iostream>
-#include <stdlib.h>
-#include <algorithm>
-#include <math.h>
-#include <string.h>
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+#include<cstring>
 using namespace std;
-
-struct action
+double a[2][10010],b[10010];
+int n,count,j;
+double l,w;                
+void search(double le)    //区间覆盖
 {
-    int s;
-    int f;
-    int index;
-};
-
-bool cmp(const action &a, const action &b)
-{
-    if (a.f <= b.f)
-        return true;
-    return false;
+    for(int i=0;i<j;i++)
+        if(a[0][i]<=le&&a[1][i]>le&&a[1][i]>b[count])    
+            b[count]=a[1][i];
+    if(b[count]!=0&&b[count]<l)
+    {
+        count++;
+        search(b[count-1]);
+    }
 }
-
-void GreedySelector(int n, action a[], bool b[])
-{
-    b[1] = true;
-    int preEnd = 1;
-    for (int i = 2; i <= n; i++)
-        if (a[i].s >= a[preEnd].f)
+int main(void)
+{ 
+    while(scanf("%d%lf%lf",&n,&l,&w)!=EOF)
+    {
+        double o,r,nr;            //必须用double
+        j=0;
+        count=0;
+        memset(b,0,sizeof(b));
+        for(int i=0;i<n;i++)
         {
-            b[i] = true;
-            preEnd = i;
+            scanf("%lf%lf",&o,&r);
+            if(r<=w/2.0) continue;                     //不需考虑的情况
+            nr=sqrt(r*r-w*w/4.0);                     //预处理
+            a[0][j]=o-nr;                              
+            a[1][j]=o+nr;
+            j++;
         }
-}
-
-int main()
-{
-    int n;
-    scanf("%d",&n);
-
-        action a[1000];
-        bool b[1000];
-        int sum = 1;
-        memset(b, false, sizeof(b));
-        for (int i = 1; i <= n; i++)
-        {
-            scanf("%d%d", &a[i].s, &a[i].f);
-            a[i].index = i;
-        }
-        sort(a, a + n + 1, cmp);
-        GreedySelector(n, a, b);
-        for (int i = 1; i <= n; i++)
-            if (b[i])
-                sum++;
-        printf("%d", sum);
-  
+        search(0);
+        if(b[count]<l)
+            printf("-1\n");
+        else
+            printf("%d\n",count+1);
+    }
     return 0;
 }
