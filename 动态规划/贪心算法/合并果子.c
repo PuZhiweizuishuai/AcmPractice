@@ -1,6 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define MAX 10010
+
+/**
+ * 没写完
+ * 见Fruit.java
+*/
 int cmp(const void *a, const void *b)
 {
     return *(int *)a - *(int *)b;

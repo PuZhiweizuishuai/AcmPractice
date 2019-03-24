@@ -1,46 +1,51 @@
 #include <stdio.h>
-#include <stdlib.h>
-#define N 1050
-
-int Greedy(int n, int s[], int f[], int b[])
+#define MAX 2000
+ 
+int Greedy(int num, int s[], int f[])
 {
-    int sum = 1;
-    // 默认将第一个活动先安排
-    b[0] = 1;
-    // 记录最近一次加入b中的活动
-    int j = 0; 
-
-    // 依次检查活动i是否与当前已选择的活动相容
-    for (int i = 1; i < n; i++)
+ 
+    int preStart = 0;
+    int preFinal = MAX; //保证是无限大即可
+    int i;
+    int temp;
+    int OK = 1;
+    int sel[MAX]; //用来储存相容的活动编号
+    int selNum = 0;
+ 
+    while (OK)
     {
-        if (s[i] >= f[j])
+        OK = 0;
+        for (i = 0; i < num; i++)
         {
-            b[i] = 1;
-            j = i;
-            sum ++;
+ 
+            if (f[i] < preFinal && s[i] >= preStart)
+            { //寻找开始时间合适地情况下结束时间最早者
+                preFinal = f[i];
+                temp = i;
+                OK = 1;
+            }
         }
-        else
-            b[i] = 0;
+ 
+        if (preFinal != MAX)
+        { //变量的重新赋值
+            sel[selNum++] = temp;
+            preStart = f[temp];
+            preFinal = MAX;
+        }
     }
-    return sum;
+    return selNum;
 }
-
+ 
 int main(void)
 {
-    // 存储活动开始时间
-    int s[N];
-    // 存储活动结束时间
-    int f[N];
-    // 存储被安排的活动编号     
-    int b[N];                                          
-    int n, i, sum = 0;
+    int s[MAX], f[MAX];
+    int n, i, sum;
     scanf("%d", &n);
-    
-    for(i = 0; i < n; i++) 
+    for (i = 0; i < n; i++)
     {
         scanf("%d%d", &s[i], &f[i]);
     }
-    sum = Greedy(n, s, f, b);
+    sum = Greedy(n, s, f);
     printf("%d", sum);
     return 0;
 }
