@@ -42,9 +42,9 @@ class StartAndEnd implements Comparable<StartAndEnd> {
 
     @Override
     public int compareTo(StartAndEnd O) {
-        if(this.s > O.s) {
+        if(this.f > O.f) {
             return 1;
-        } else if(this.s < O.s) {
+        } else if(this.f < O.f) {
             return -1;
         } else {
             return 0;
