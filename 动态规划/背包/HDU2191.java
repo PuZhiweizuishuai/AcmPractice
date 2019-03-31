@@ -2,6 +2,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 /**
  * 支援灾区的非背包解法
+ * 对于一些特殊数据可能有问题
  */
 public class HDU2191 {
     public static void main(String[] args) {
