@@ -2,7 +2,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 /**
  * 支援灾区的非背包解法
- * 对于一些特殊数据可能有问题
+ * 这种方法有问题
+ * 碰见比值相等的数据时，结果与正确结果不相等
+ * 
  */
 public class HDU2191 {
     public static void main(String[] args) {

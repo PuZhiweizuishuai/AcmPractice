@@ -25,7 +25,7 @@ int main(void)
                 for (k = n; k >= p[i]; k--)
                 {
                     sum[k] = max(sum[k], sum[k - p[i]] + h[i]);
-                    printf("i=%d   j=%d   sum[%d]=%d\n",i,j, k, sum[k]);
+                    //printf("i=%d   j=%d   sum[%d]=%d\n",i,j, k, sum[k]);
                 }
             }
         }

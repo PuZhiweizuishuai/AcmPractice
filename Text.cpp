@@ -1,28 +1,95 @@
-#include <iostream>
-#include <algorithm>
-#include <math.h>
-#include <stdio.h>
-#include <string.h>
+#include<cstdio>
+#include<algorithm>
+#include<iostream>
 using namespace std;
-int t[100005][15];//表示T秒时馅饼落在对应坐标的位置
+
+void Read(int &p)
+{
+    p=0;
+    int f=1;
+    char c=getchar();
+    while(c<'0'||c>'9') 
+        f=(c=='-')?-1:1,c=getchar();
+    while(c>='0'&&c<='9')
+        p=p*10+c-'0',c=getchar();
+    p*=f;
+}
+
+int r,c,a[1000],x,n,cnt,sp;
 int main()
 {
-    int N,x,T,mt;//mt是记录最大时间
-    while(~scanf("%d",&N)&&N){//馅饼的总个数
-        mt=0;
-        memset(t,0,sizeof(t));//初始化数组t
-        for(int i=0;i<N;i++){
-            cin>>x>>T;
-            t[T][x]++;//表示相同时间掉的饼数
-            mt=max(mt,T);//取最大的时间
+    while(1)
+    {
+        Read(r); Read(c); n=r*c;
+        if(!r&&!c) break;
+        for(int i=0;i<n;i++)
+        {
+            scanf("%d", &a[i]);
+            a[i] *= 100;
         }
-        for(int i=mt-1;i>=0;i--){//从底层开始往上走(数塔)
-            for(int j=0;j<=10;j++){//枚举坐标位置
-                if(j==0)t[i][j]=max(t[i+1][j],t[i+1][j+1])+t[i][j];//只需枚举中右
-                else t[i][j]=max(max(t[i+1][j],t[i+1][j+1]),t[i+1][j-1])+t[i][j];//比较下一层的三个位置的落饼数取最大
+        sort(a,a+n);
+        Read(x);
+        
+        double V=x*1.0;
+        double height=a[0];
+        printf("X=%d\n", a[0]);
+   
+        cnt=1;
+        for(int i=1;i<n;i++)
+        {
+            if((a[i]-a[i-1])*i<V)
+            {
+                V-=i*(a[i]-a[i-1]);
+                cnt++; height=a[i];
+            }
+            else 
+            {
+                height+=V/i;
+                V=0;
+                break;
             }
         }
-        cout<<t[0][5]<<endl;//输出最上层横坐标T=0最中间的结果
+        if(V)  height+=V/n*1.0;
+        printf("height=%.2lf\n", height);
+        printf("Region %d\n",++sp);
+        printf("Water level is %.2lf meters.\n",height/100);
+        printf("%.2lf percent of the region is under water.\n",cnt*100.0/n);
+        puts("");
+    }
+}
+/*
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+bool f;
+int tree()
+{
+    int wl, dl, wr, dr;
+    scanf("%d%d%d%d", &wl, &dl, &wr, &dr);
+    if (wl == 0)
+        wl = tree();
+    if (wr == 0)
+        wr = tree();
+    if (wl * dl != wr * dr)
+        f = false;
+    return wl + wr;
+}
+int main()
+{
+    int t;
+    //freopen("de.txt","r",stdin);
+    scanf("%d", &t);
+    while (t--)
+    {
+        f = true;
+        tree();
+        if (f)
+            printf("YES\n");
+        else
+            printf("NO\n");
+        if (t)
+            printf("\n");
     }
     return 0;
-}
+}*/
