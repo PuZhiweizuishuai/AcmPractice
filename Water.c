@@ -12,7 +12,7 @@ int main(void)
     int a[MAX];
     int sumDown;
     int index = 0;
-    double heigh, v;
+    double heigh, v;   
     while (1)
     {
         scanf("%d%d", &m, &n);
@@ -37,22 +37,22 @@ int main(void)
         heigh = a[0];
         for (i = 1; i < MN; i++)
         {
-            if ((a[i] - a[i - 1]) * i *S < v)
+            if ((a[i] - a[i - 1]) * i * S < v)
             {
-                v -= (a[i] - a[i - 1]) * i *S;
+                v -= (a[i] - a[i - 1]) * i * S;
                 heigh = a[i];
                 sumDown++;
             }
             else
             {
-                heigh += v / (S*i * 1.0);
+                heigh += v / (S * i * 1.0);
                 v = 0;
                 break;
             }
         }
         if (v != 0)
         {
-            heigh += v / (S*MN * 1.0);
+            heigh += v / (S * MN * 1.0);
         }
         printf("%.2lf\n%.2lf\n\n", heigh, ((sumDown * 100.0) / (MN * 1.0)));
     }
