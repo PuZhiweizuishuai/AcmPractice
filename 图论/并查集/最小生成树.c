@@ -2,9 +2,9 @@
 #include <stdlib.h>
 typedef struct Node
 {
-    int u;
-    int v;
-    int w;
+    long long int u;
+    long long int v;
+    long long int w;
 } NODE;
 
 int Comp(const void *p1, const void *p2)
@@ -13,17 +13,15 @@ int Comp(const void *p1, const void *p2)
     NODE *d = (NODE *)p2;
     if (c->w != d->w)
         return c->w - d->w;
-    else
-        return c->w - d->w;
 }
 
-int ID[200005];
-int size[200005];
+long long int ID[200005];
+long long int size[200005];
 NODE G[500005];
 
-void init(int n)
+void init(long long int n)
 {
-    int i;
+    long long int i;
     for (i = 0; i < (n + 1); i++)
     {
         ID[i] = -1;
@@ -31,16 +29,14 @@ void init(int n)
     }
 }
 
-int find(int p)
+long long int find(long long int p)
 {
-    while (-1 != ID[p])
-    {
-        p = ID[p];
-    }
-    return p;
+    if(ID[p] == -1)
+        return p;
+    return ID[p] = find(ID[p]);
 }
 
-void unions(int pRoot, int qRoot)
+void unions(long long int pRoot,long long int qRoot)
 {
     if (qRoot == pRoot)
     {
@@ -58,7 +54,7 @@ void unions(int pRoot, int qRoot)
     }
 }
 
-int connected(int pRoot, int qRoot)
+int connected(long long int pRoot, long long int qRoot)
 {
     if (pRoot == qRoot)
         return 1;
@@ -66,15 +62,15 @@ int connected(int pRoot, int qRoot)
         return 0;
 }
 
-int Kruskal(int n, int m)
+long long int Kruskal(long long int n, long long int m)
 {
-    int i;
+    long long int i;
     qsort(G, m, sizeof(G[0]), Comp);
-    int sum = 0, total = 0;
+    long long int sum = 0, total = 0;
     for (i = 0; i < m; i++)
     {
-        int p = find(G[i].u);
-        int q = find(G[i].v);
+        long long int p = find(G[i].u);
+        long long int q = find(G[i].v);
         if (connected(p, q))
         {
             continue;
@@ -93,14 +89,14 @@ int Kruskal(int n, int m)
 
 int main(void)
 {
-    int i, j;
-    int n, m;
-    scanf("%d%d", &n, &m);
+    long long int i, j;
+    long long int n, m;
+    scanf("%lld%lld", &n, &m);
     init(n);
     for (i = 0; i < m; i++)
     {
-        scanf("%d%d%d", &G[i].u, &G[i].v, &G[i].w);
+        scanf("%lld%lld%lld", &G[i].u, &G[i].v, &G[i].w);
     }
-    printf("%d\n", Kruskal(n, m));
+    printf("%lld\n", Kruskal(n, m));
     return 0;
 }
