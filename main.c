@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 
-
 int main(void)
 {
     int i, j, N, A[20005], k;
@@ -15,7 +14,7 @@ int main(void)
     ans = 0;
     for (i = 0, j = N - 1, k = 0; k < N; k++)
     {
-        if (A[j]*(k+1) >= A[i]*(k+1))
+        if (A[j] * (k + 1) >= A[i] * (k + 1))
         {
             //printf("%d   k=%d    %d   i=%d\n", A[i], k + 1, A[i] * (k + 1),i);
             ans += (A[i] * (k + 1));
