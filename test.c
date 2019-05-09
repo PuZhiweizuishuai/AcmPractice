@@ -1,27 +1,42 @@
 #include <stdio.h>
-#include <string.h>
-#define maxn 2020
-#define max(a, b) (((a) > (b)) ? (a) : (b))
-long long int dp[maxn][maxn];
-long long int ans;
-long long int a[maxn];
-int n;
+#include <math.h>
+#define ZERO 0.000001
+
+double fun(double x)
+{
+    return 2 * x * x * x - 4 * x * x + 3 * x - 6;
+}
+
+double root(double a, double b)
+{
+    double funmid;
+    while (fun(a)*fun(b)>0)
+    {
+        scanf("%lf%lf",&a,&b);
+    }
+
+    while (1)
+    {
+        double mid = (a + b) / 2;
+        funmid = fun(mid);
+        //printf("%lf %lf  %lf  %lf\n", a, b, mid, fun(mid));
+        if (fabs(funmid - 0) <= ZERO)
+        {
+            return mid;
+        }
+        else if (funmid * fun(a) > 0)
+            a = mid + ZERO;
+        else 
+            b = mid - ZERO;
+        /*if (fun(a) * fun(b) >= 0)
+            scanf("%lf%lf", &a, &b);*/
+    } 
+}
 
 int main(void)
 {
-    scanf("%d", &n);
-    for (int i = 1; i <= n; i++)
-        scanf("%lld", &a[i]);
-    memset(dp, 0, sizeof(dp));
-    printf("\n");
-    for (int k = 2; k <= n; k++)
-        for (int i = 1; i <= k; i++)
-        {
-            dp[i][k] = max(dp[i][k - 1] + (k - 1) * a[n - k + i + 1], dp[i - 1][k - 1] + (k - 1) * a[i - 1]);
-            printf("%d i=%d k=%d\n", dp[i][k],i,k);
-        }
-    for (int i = 1; i <= n; i++)
-        ans = max(ans, dp[i][n] + n * a[i]);
-    printf("\n%lld\n", ans);
+    double a, b;
+    scanf("%lf%lf", &a, &b);
+    printf("%.6lf\n", root(a, b));
     return 0;
 }

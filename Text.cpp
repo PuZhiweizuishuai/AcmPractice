@@ -1,36 +1,64 @@
+/*
+n = a % 9973
+
+n = a - (a/9973)*9973
+
+令 (a / b) = x
+
+n = a-x*9973
+
+n+x*9973 = a
+
+bx = a
+
+令a/9973 = y
+
+bx-(a/9973)*9973
+
+(a / b) % 9973
+
+bx-9973y = n
+b(x/n)-(9973)*(y/9973)
+
+ax + by = 1
+*/
 #include <iostream>
-#include <cstdio>
-#include <cstring>
-#include <algorithm>
 using namespace std;
-int a[2100], f[2100];
+int MOD(int a, int b)
+{
+    return (a % b + b) % b;
+}
+
+int ExGcd(int a, int b, int &x, int &y)
+{
+    if (b == 0)
+    {
+        x = 1;
+        y = 0;
+        return a;
+    }
+    int r = ExGcd(b, MOD(a, b), x, y);
+    //cout << r << endl;
+    int t = x;
+    x = y;
+    y = t - (a / b) * y;
+    return r;
+}
+
 int main()
 {
-    int n;
-
-    scanf("%d", &n);
-    for (int i = 1; i <= n; i++)
-        scanf("%d", &a[i]);
-    memset(f, 0, sizeof(f));
-    //f[i][j]表示第i次取数后右面共取j个的最大值
-    //f[i][j]=max(f[i-1][j-1]+i*a[n-j+1],f[i-1][j]+i*a[i-j]);(j<=i)
-    f[0] = a[1];
-    f[1] = a[n];
-    for (int i = 2; i <= n; i++)
+    int x, y, n, B, T;
+    scanf("%d", &T);
+    while (T--)
     {
-        for (int j = i; j >= 0; j--)
-        {
-            if (j)
-                f[j] = max(f[j - 1] + i * a[n - j + 1], f[j] + i * a[i - j]);
-            else
-                f[j] += i * a[i];
-        }
+        scanf("%d%d", &n, &B);
+        ExGcd(B, 9973, x, y);
+        if (x < 0)
+            x += 9973;
+        //printf("x=%d\n", x%9973);
+        x *= n;
+        
+        printf("%d\n", x % 9973);
     }
-    int _max = (1 << 31);
-    for (int i = 0; i <= n; i++)
-        if (f[i] > _max)
-            _max = f[i];
-    printf("%d\n", _max);
-
     return 0;
 }
