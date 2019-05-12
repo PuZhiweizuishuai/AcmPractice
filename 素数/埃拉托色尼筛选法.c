@@ -1,5 +1,5 @@
 #include<stdio.h>
-#define N 1000
+#define N 100000
 
 void TheSieveOfEratosthenes();
 
@@ -39,5 +39,5 @@ void TheSieveOfEratosthenes()
                 isPrime[j] = 0;
         }
     }
-    printf("%d",isPrime[11]);
+    printf("%d",isPrime[1039]);
 }

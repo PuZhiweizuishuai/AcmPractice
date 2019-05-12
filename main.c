@@ -1,18 +1,16 @@
 #include <stdio.h>
-
 int main(void)
 {
-    long int dp[400000], i, j, n;
-    dp[0] = 1;
-    for (i = 1; i <= 3; i++)
+    long long int n, m;
+    scanf("%lld%lld", &n, &m);
+    if (n % 2 == 1 && m % 2 == 0 && n < m)
     {
-        for (j = i; j < 400000; j++)
-            dp[j] += dp[j - i];
+        printf("2\n");
+        return 0;
     }
-    while (scanf("%ld", &n) != EOF)
-    {
-        printf("%ld\n", dp[n]);
-    }
-
+    else if (n % 2 && m % 2)
+        printf("1\n");
+    else
+        printf("0\n");
     return 0;
 }
