@@ -1,0 +1,78 @@
+Alice and Bob have an integer N. Alice and Bob are not happy with 
+their integer. Last night they went to a cocktail party and found
+that another couple had the exact same integer! Because of that
+they are getting a new integer.
+Bob wants to impress the other couple and therefore he thinks their
+new integer should be strictly larger than N.
+Alice herself is actually fond of some specific integer k. Therefore,
+Alice thinks that whatever integer they pick, it should be possible
+to write it as a sum of k distinct powers of 2.
+
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    long long int n, b, i, yu = 1;
+    scanf("%lld", &n);
+    long long int mod = 1000000007;
+    for (i = 1; i <= n; i++)
+    {
+        scanf("%lld", &b);
+        yu = (yu * 2 - b) % mod;
+        if (yu < 0) 
+        {
+            printf("error\n");
+            return ;
+        }   
+    }
+    printf("%lld\n", yu);
+
+    return 0;
+}
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+int cmp(const void *a, const void *b)
+{
+    return *(int *)b - *(int *)a;
+}
+int main(void)
+{
+    int N, i, a[100], A = 0, B = 0;
+    while (scanf("%d", &N) != EOF)
+    {
+        memset(a,0,sizeof(a));
+        for (i = 0; i < N; i++)
+        {
+            scanf("%d", &a[i]);
+        }
+        qsort(a, N, sizeof(a[0]), cmp);
+        for (i = 0; i < N; i++)
+        {
+            if (i % 2 == 0)
+                A += a[i];
+            else
+                B += a[i];
+        }
+        printf("%d %d\n", A, B);
+    }
+
+    return 0;
+}
+
+1
+10
+1 2 3
+4 5 6
+7 8 9
+9 8 7
+6 5 4
+3 2 1
+2 5 8
+3 5 7
+1 5 9
+5 4 3
+23.12

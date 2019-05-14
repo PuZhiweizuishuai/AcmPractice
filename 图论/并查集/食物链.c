@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define MAX 1005
+#define MAX 200005
 
 /**
  * 分量ID 
@@ -74,6 +74,7 @@ int main(void)
             unions(pRoot, qRoot);
     }
 
+    // 查找连接数
     for(i = 0; i <= num; i++)
     {
         if(ID[i] != -1)

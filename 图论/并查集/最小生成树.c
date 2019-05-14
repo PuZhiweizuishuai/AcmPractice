@@ -11,8 +11,8 @@ int Comp(const void *p1, const void *p2)
 {
     NODE *c = (NODE *)p1;
     NODE *d = (NODE *)p2;
-    if (c->w != d->w)
-        return c->w - d->w;
+
+    return c->w - d->w;
 }
 
 long long int ID[200005];
