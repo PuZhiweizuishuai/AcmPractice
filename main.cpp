@@ -1,87 +1,65 @@
+#include <cstdio>
 
-#include <iostream>
-#include <stdio.h>
-#include <algorithm>
-#include <math.h>
-#include <memory.h>
-using namespace std;
-const int maxn = 35;
-double mp[maxn][maxn];
-int f[maxn];
-typedef struct
+int MAX_(int a, int b)
 {
-    int x;
-    int y;
-    int z;
-} ZB;
-ZB a[maxn];
-typedef struct
-{
-    int x;
-    int y;
-    double w;
-} QQ;
-QQ b[maxn];
-bool cmp(QQ a, QQ b)
-{
-    return a.w < b.w;
+    if (a > b)
+        return a;
+    else
+        return b;
 }
-int findx(int x)
-{
-    int r = x;
-    while (r != f[r])
-        r = f[r];
-    return r;
-}
+
 int main()
 {
-    int t, n;
-    cin >> t;
-    while (t--)
+    int s1, s2, s3, s4, s5, s6;
+    while (scanf("%d%d%d%d%d%d", &s1, &s2, &s3, &s4, &s5, &s6) && s1 + s2 + s3 + s4 + s5 + s6)
     {
-        cin >> n;
-        for (int i = 1; i <= n; i++)
+        int packets = 0;
+        packets += s6; // 6*6的产品一个装一箱
+
+        packets += s5;              // 5*5的产品一个装一箱
+        s1 = MAX_(0, s1 - 11 * s5); // 剩余空间用1*1的产品尽量填满
+
+        packets += s4; // 4*4的产品一个装一箱
+        if (s2 < 5 * s4)
+            s1 = MAX_(0, s1 - (5 * s4 - s2)); // 假如2*2的产品填完之后仍然有空隙，则用1*1填满
+        s2 = MAX_(0, s2 - 5 * s4);            // 尽量用2*2的产品填满
+
+        packets += (s3 + 3) / 4; // 3*3的产品四个一箱
+        s3 %= 4;                 // 假如3*3的箱子不是四的倍数个，则先用2*2填充再用1*1填充
+        if (s3 == 1)
         {
-            cin >> a[i].x >> a[i].y >> a[i].z;
-            f[i] = i;
+            if (s2 < 5)
+                s1 = MAX_(0, s1 - (27 - 4 * s2));
+            else
+                s1 = MAX_(0, s1 - 7);
+            s2 = MAX_(0, s2 - 5);
         }
-        memset(mp, 0, sizeof(mp)); //初始化
-        double len;
-        for (int i = 1; i <= n; i++)
+        else if (s3 == 2)
         {
-            for (int j = i + 1; j <= n; j++)
-            {
-                len = sqrt((a[i].x - a[j].x) * (a[i].x - a[j].x) + (a[i].y - a[j].y) * (a[i].y - a[j].y) + (a[i].z - a[j].z) * (a[i].z - a[j].z));
-                mp[i][j] = mp[j][i] = len; //构造邻接矩阵
-            }
+            if (s2 < 3)
+                s1 = MAX_(0, s1 - (18 - 4 * s2));
+            else
+                s1 = MAX_(0, s1 - 6);
+            s2 = MAX_(0, s2 - 3);
         }
-        int q = 0;
-        for (int i = 1; i <= n; i++)
-            for (int j = 1; j <= n; j++)
-            {
-                if (j > i)
-                {
-                    q++;
-                    b[q].x = i;
-                    b[q].y = j;
-                    b[q].w = mp[i][j];
-                }
-            }
-        sort(b + 1, b + q + 1, cmp);
-        int p = 0;
-        double ans = 0;
-        for (int i = 1; i <= q; i++)
+        else if (s3 == 3)
         {
-            if (findx(b[i].x) != findx(b[i].y))
-            {
-                ans += b[i].w;
-                f[findx(b[i].x)] = b[i].y;
-                p++;
-                if (p == n - 1)
-                    break;
-            }
+            if (s2 < 1)
+                s1 = MAX_(0, s1 - (9 - 4 * s2));
+            else
+                s1 = MAX_(0, s1 - 5);
+            s2 = MAX_(0, s2 - 1);
         }
-        printf("%.2lf\n", ans);
+
+        packets += (s2 + 8) / 9; // 2*2的产品九个一箱
+        s2 %= 9;                 // 假如2*2的箱子不是九的倍数个，则用1*1填充
+        if (s2)
+            s1 = MAX_(0, s1 - (36 - 4 * s2));
+
+        packets += (s1 + 35) / 36; // 1*1的产品三十六个一箱
+
+        printf("%d\n", packets);
     }
+
     return 0;
 }

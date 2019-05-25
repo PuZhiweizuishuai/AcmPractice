@@ -1,84 +1,30 @@
 #include <stdio.h>
-#define MAX 1005
+#include <math.h>
+const long double PI = 3.14159265358979;
 
-/**
- * 分量ID 
- * */
-int ID[MAX];
-
-/**
- * 分量数量，冗余关系的数目
-*/
-int count;
-
-/**
- * 初始化
-*/
-void init(int n)
+int min(int a, int b)
 {
-    count = n;
-    int i;
-    // 因为点从 1 开始，所以 n 值加 1
-    for (i = 0; i <= n; i++)
-    {
-        ID[i] = -1;
-    }
-}
-
-/**
- * 查找跟节点
-*/
-int find(int p)
-{
-    while (-1 != ID[p])
-    {
-        p = ID[p];
-    }
-    return p;
-}
-
-/**
- * 连接
-*/
-void unions(int pRoot, int qRoot)
-{
-    if (qRoot == pRoot)
-    {
-        return;
-    }
-    ID[pRoot] = qRoot;
-    count--;
-}
-
-int connected(int pRoot, int qRoot)
-{
-    if (pRoot == qRoot)
-        return 0;
-    else
-        return 1;
+    if (a > b)
+        return b;
+    return a;
 }
 
 int main(void)
 {
-    int n, m, p, q;
-    int num,i,sum=0;
-    scanf("%d%d", &n, &m);
-    init(m);
-    num = m;
-    while (m--)
-    {
-        scanf("%d%d", &p, &q);
-        int pRoot = find(p);
-        int qRoot = find(q);
-        if (connected(pRoot, qRoot) == 1)
-            unions(pRoot, qRoot);
-    }
+    int m, n;
+    long double r, y, s1, s2, sr;
+    int ax, ay, bx, by;
+    scanf("%d%d%Lf", &m, &n, &r);
+    scanf("%d%d%d%d", &ax, &ay, &bx, &by);
+    s1 = abs((ay - by) / n) * r;
+    sr = (min(ay, by) / n) * r;
+    s1 += PI * sr * abs(ax - bx) / m;
+    s2 = (ay * r) / n + (by * r) / n;
+    
+    if (s1 > s2)
+        printf("%Lf\n", s2);
+    else
+        printf("%Lf\n", s1);
 
-    for(i = 0; i <= num; i++)
-    {
-        if(ID[i] != -1)
-            sum++;
-    }
-    printf("%d\n", sum);
     return 0;
 }
